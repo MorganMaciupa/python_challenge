@@ -33,11 +33,14 @@ with open(budgetcsv) as csvfile:
         
         max_decrease = min(totals_change)
         
-        
+    #Print table title    
     print("Financial Analysis")
     print("-----------------------------------")
+    #Calculate the length of the list of months
     print(f'Total months: {len(months)}')
+    #Sum the total of all revenue
     print(f'Total: ${sum(total)}')
+    #Print the average change, greatest increase and decrease
     print(f'Average Change: ${avg_change}')
     print(f'Greatest Increase in Profits: (${max_increase})')
     print(f'Greatest Decrease in Profits: (${max_decrease})')
