@@ -7,11 +7,9 @@ budgetcsv = os.path.join("Resources", "budget_data.csv")
 #Define the variables:
 months = []
 total = []
-largest_increase = []
-smallest_increase = []
+totals_change = []
 
 # # Open the csv
-
 with open(budgetcsv) as csvfile:
     
 #  # Split the data on commas
@@ -23,22 +21,29 @@ with open(budgetcsv) as csvfile:
         
 # # # Add total number of months included in the dataset to a list
         months.append(row[0])
-        total.append(int(row[1]))
-    
-    #Calculate the total of months in the list
-    print(f'Total months: {len(months)}')
-    
 # # # Add each total amount of "Profit/Losses" over the entire period to a list
+        total.append(float(row[1]))
+
+    #create a loop to total differences between rows
+    for i in range(1,len(total)):
+        totals_change.append(total[i] - total[i-1])
+        avg_change = round(sum(totals_change)/len(totals_change), 2)
         
-    
-    #Sum the totals from the list
+        max_increase = max(totals_change)
+        
+        max_decrease = min(totals_change)
+        
+        
+    print("Financial Analysis")
+    print("-----------------------------------")
+    print(f'Total months: {len(months)}')
     print(f'Total: ${sum(total)}')
-
-# # Add average of the changes in "Profit/Losses" over the entire period to a list
-        
-
+    print(f'Average Change: ${avg_change}')
+    print(f'Greatest Increase in Profits: (${max_increase})')
+    print(f'Greatest Decrease in Profits: (${max_decrease})')
+    
 # # Add greatest increase in profits (date and amount) over the entire period to a list
-    #largest_increase.append(row[1])
-        # lgst_inc = 
+    
 
-# # The greatest decrease in losses (date and amount) over the entire period
+# # # The greatest decrease in losses (date and amount) over the entire period
+#         
