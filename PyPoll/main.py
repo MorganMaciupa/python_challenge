@@ -4,7 +4,7 @@ import csv
 # Path to collect data from the Resources folder
 polling_csv = os.path.join("Resources", "election_data.csv")
 # Path to save data to text file
-text_results = os.path.join("text_results")
+text_results = os.path.join("Analysis", "Results.txt")
 
 # Define variables
 total_votes = 0

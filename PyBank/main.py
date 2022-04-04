@@ -1,13 +1,16 @@
+from calendar import month
 import os
 import csv
 
 # Path to collect data from the Resources folder
 budgetcsv = os.path.join("Resources", "budget_data.csv")
+# Path to save data to text file
+results = os.path.join("Analysis", "Results.txt")
 
 #Define the variables:
 months = []
 total = []
-totals_change = []
+change = []
 
 # # Open the csv
 with open(budgetcsv) as csvfile:
@@ -19,34 +22,48 @@ with open(budgetcsv) as csvfile:
 # Loop through each row in the file
     for row in csvreader:
         
-# # # Add total number of months included in the dataset to a list
+# Count each row as a new month by adding each to a list
         months.append(row[0])
+        
 # # # Add each total amount of "Profit/Losses" over the entire period to a list
         total.append(float(row[1]))
-
-    #create a loop to total differences between rows
-    for i in range(1,len(total)):
-        totals_change.append(total[i] - total[i-1])
-        avg_change = round(sum(totals_change)/len(totals_change), 2)
         
-        max_increase = max(totals_change)
-        
-        max_decrease = min(totals_change)
-        
-    #Print table title    
+#Print table title    
     print("Financial Analysis")
     print("-----------------------------------")
-    #Calculate the length of the list of months
+    #Print the total number of months
     print(f'Total months: {len(months)}')
+#Open text file to save results
+with open(results, 'w') as txtfile:
+    # Write results to txt file
+    txtfile.write("Financial Analysis\n")
+    txtfile.write("-----------------------------------\n")
+    txtfile.write(f'Total months: {len(months)}\n')
+    txtfile.write("-----------------------------------\n")
+
+    #create a loop to total differences between rows
+    for i in range(1, len(months)):
+        change.append(total[i] - total[i-1])
+        avg_change = round(sum(change)/len(change), 2)
+        
+        max_increase = max(change)
+        month_max = (months[change.index(max(change))])
+        
+        max_decrease = min(change)
+        month_min = (months[change.index(min(change))])
+
+        
+
     #Sum the total of all revenue
     print(f'Total: ${sum(total)}')
     #Print the average change, greatest increase and decrease
     print(f'Average Change: ${avg_change}')
-    print(f'Greatest Increase in Profits: (${max_increase})')
-    print(f'Greatest Decrease in Profits: (${max_decrease})')
+    print(f'Greatest Increase in Profits: {month_max} (${max_increase})')
+    print(f'Greatest Decrease in Profits: {month_min} (${max_decrease})')
     
-# # Add greatest increase in profits (date and amount) over the entire period to a list
-    
-
-# # # The greatest decrease in losses (date and amount) over the entire period
-#         
+    #Print the txt file
+    txtfile.write(f'Total: ${sum(total)}\n')
+    #Print the average change, greatest increase and decrease to txt file
+    txtfile.write(f'Average Change: ${avg_change}\n')
+    txtfile.write(f'Greatest Increase in Profits: {month_max} (${max_increase})\n')
+    txtfile.write(f'Greatest Decrease in Profits: {month_min} (${max_decrease})\n')
