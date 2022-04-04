@@ -1,4 +1,3 @@
-from calendar import month
 import os
 import csv
 
